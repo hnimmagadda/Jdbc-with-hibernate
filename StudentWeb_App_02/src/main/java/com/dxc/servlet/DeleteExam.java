@@ -1,30 +1,26 @@
 package com.dxc.servlet;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.dxc.dao.StudentjdbcDAO;
-import com.dxc.hibservice.StudentHibServiceI;
-import com.dxc.service.StudentServiceI;
+import com.dxc.service.ExamServiceI;
 
 /**
- * Servlet implementation class Delete
+ * Servlet implementation class DeleteExam
  */
-public class Delete extends HttpServlet {
+public class DeleteExam extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Delete() {
+    public DeleteExam() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,21 +30,14 @@ public class Delete extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int id=Integer.parseInt(request.getParameter("id"));
-		boolean bool = false;
-		try {
-			StudentHibServiceI s = new StudentHibServiceI();
-			bool=s.delete(id);
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if(bool) {
-			PrintWriter out=response.getWriter();
-			out.println("deleted successfully");
-			RequestDispatcher rd = request.getRequestDispatcher("DisplayStudents.jsp");
-			rd.include(request, response);
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		String examid=request.getParameter("examid");
+		ExamServiceI examService=new ExamServiceI();
+		if(examService.delete(examid))
+		{
+			HttpSession session=request.getSession(true);
+			RequestDispatcher r=request.getRequestDispatcher("DisplayExam.jsp");
+			r.forward(request, response);
 		}
 	}
 
@@ -57,7 +46,7 @@ public class Delete extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		//doGet(request, response);
 	}
 
 }

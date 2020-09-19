@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.dxc.dao.UserJdbcDAO;
+import com.dxc.hibservice.UserHibService;
 import com.dxc.service.UserServiceI;
 
 /**
@@ -47,7 +48,7 @@ public class Validation extends HttpServlet {
 //		response.setContentType("text/html");
 //		PrintWriter out = response.getWriter();
 		
-		if(UserServiceI.validate(un, pw)) {
+		if(UserHibService.validate(un, pw)) {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("usnme", un);
 			RequestDispatcher rd = request.getRequestDispatcher("DisplayStudents.jsp");

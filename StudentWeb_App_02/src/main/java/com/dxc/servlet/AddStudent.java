@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.dxc.beans.Student;
 import com.dxc.dao.StudentjdbcDAO;
+import com.dxc.hibservice.StudentHibServiceI;
 import com.dxc.service.StudentServiceI;
 
 /**
@@ -50,7 +51,7 @@ public class AddStudent extends HttpServlet {
 		boolean s=false;
 		try {
 			Student student=new Student(id, name, dob, email, mobile);
-		    s=  new StudentServiceI().save(student);
+		    s=  new StudentHibServiceI().save(student);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
